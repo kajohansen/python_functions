@@ -2,9 +2,10 @@
 #!/usr/bin/python
 #
 # Geo Coding
+import sys
 
-def LatLngToDecimal(deg, min, sec, cardinal):
-    decimal_min = min / 60.0
+def LatLngToDecimal(deg, mins, sec, cardinal):
+    decimal_min = mins / 60.0
     decimal_sec = float(sec) / 3600
     decimal = deg + decimal_min + decimal_sec
     cardinal = cardinal.upper()
@@ -50,8 +51,25 @@ def DecimalToLatLng(decimal_deg, lat_lng):
             cardinal = "E"
     # print the coordinates
     print lat_lng + " " + degrees + u"° " + str(minutes) + "' " + str(seconds) + "' " + cardinal
-    
-        
+
+# get the command line arguments
+if (len(sys.argv) == 5):
+    deg = sys.argv[1]
+    mins = sys.argv[2]
+    sec = sys.argv[3]
+    cardinal = sys.argv[4]
+    LatLngToDecimal(float(deg), float(mins), float(sec), str(cardinal)) 
+elif (len(sys.argv) == 3):
+    deg = sys.argv[1]
+    lat_lng = sys.argv[2]
+    DecimalToLatLng(float(deg), str(lat_lng))
+else:
+  print "You can either put decimal latitude or longitude"
+  print " -- example1: 51.17926388888888 Lat"
+  print " -- example2: -1.8262 Lng"
+  print "-- Or --"
+  print "You can put degrees minutes seconds and cardinal direction"
+  print " -- example: 19 18 6 n"
     
 # LatLngToDecimal(19, 18, 6, "n")
 # LatLngToDecimal(51, 10, 45.35, "s")
